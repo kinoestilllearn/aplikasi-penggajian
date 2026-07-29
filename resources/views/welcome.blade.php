@@ -115,9 +115,9 @@
 
             <!-- Apple Clean Title -->
             <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#1D1D1F] dark:text-white tracking-tight leading-tight space-y-2">
-                <span>Manajemen Roster Player & Staff</span>
+                <span>Sistem Informasi Penggajian EVOS</span>
                 <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#0052CC] to-[#00D2FF] pt-1">
-                    Minimal, Modern, & High Performance
+                    One Team, One Voice, One Family
                 </span>
             </h1>
 
