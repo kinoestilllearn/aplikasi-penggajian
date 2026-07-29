@@ -99,33 +99,33 @@
         </header>
 
         <!-- Hero Section -->
-        <main class="max-w-3xl w-full mx-auto px-6 py-8 sm:py-12 text-center space-y-5 my-auto">
+        <main class="max-w-4xl w-full mx-auto px-6 py-12 text-center space-y-6 my-auto">
             <!-- Official EVOS Esports Logo Badge Emblem -->
-            <div class="flex justify-center mb-1">
-                <div class="hover:scale-105 transition-transform duration-300">
-                    <img src="{{ asset('images/evos-logo.png') }}" class="w-24 h-24 sm:w-28 sm:h-28 object-contain drop-shadow-xl" alt="EVOS Esports Crest Logo">
+            <div class="flex justify-center mb-2">
+                <div class="p-3 hover:scale-105 transition-transform duration-300">
+                    <img src="{{ asset('images/evos-logo.png') }}" class="w-28 h-28 sm:w-36 sm:h-36 object-contain drop-shadow-2xl" alt="EVOS Esports Crest Logo">
                 </div>
             </div>
 
             <!-- EVOS Release Pill -->
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-[#151D2A] border border-slate-200/80 dark:border-slate-800 text-[11px] font-bold text-slate-700 dark:text-slate-300 shadow-sm">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-[#151D2A] border border-slate-200/80 dark:border-slate-800 text-xs font-semibold text-[#0052CC] dark:text-[#00D2FF] shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-[#0052CC] dark:bg-[#00D2FF] animate-pulse"></span>
-                <span>EVOS Esports HQ &bull; Payroll Operations System v2.0</span>
+                <span>EVOS Esports HQ &bull; Apple Clean Payroll Operations v2.0</span>
             </div>
 
-            <!-- Apple Proportional Clean Title & Motto -->
-            <div class="space-y-1.5">
-                <h1 class="text-2xl sm:text-4xl md:text-5xl font-black text-[#0F172A] dark:text-white tracking-tight leading-tight">
-                    Sistem Informasi Penggajian EVOS
-                </h1>
-                <h2 class="text-lg sm:text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0052CC] via-[#0066FF] to-[#00D2FF] tracking-wide uppercase">
-                    One Team &bull; One Voice &bull; One Family
-                </h2>
-            </div>
+            <!-- Apple Clean Title -->
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#1D1D1F] dark:text-white tracking-tight leading-tight space-y-2 max-w-3xl mx-auto">
+                <span class="block">Sistem Informasi</span>
+                <span class="block">Penggajian EVOS</span>
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-[#0052CC] to-[#00D2FF] pt-1">
+                    <span class="block">One Team, One Voice,</span>
+                    <span class="block">One Family</span>
+                </span>
+            </h1>
 
             <!-- Subtitle -->
-            <p class="text-slate-600 dark:text-[#94A3B8] text-xs sm:text-sm md:text-base max-w-xl mx-auto leading-relaxed font-medium">
-                Sistem pengelolaan data Roster Player & Staff, otomatisasi perhitungan gaji pokok, tunjangan, insentif, lembur, serta persetujuan supervisor resmi EVOS.
+            <p class="text-[#86868B] dark:text-[#94A3B8] text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
+                Kelola data Roster (MLBB, PUBGM, Valorant, Content Creator), kalkulasi komponen penggajian bulanan (Gaji Pokok, Tunjangan, Insentif, Lembur), serta alur persetujuan Supervisor secara otomatis.
             </p>
 
             <!-- Action Button -->
