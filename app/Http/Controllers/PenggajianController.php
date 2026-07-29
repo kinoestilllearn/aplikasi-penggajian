@@ -101,10 +101,15 @@ class PenggajianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Penggajian $penggajian)
-    // {
-    //     //
-    // }
+    public function destroy(string $id)
+    {
+        $penggajian = Penggajian::findOrFail($id);
+        $noRef      = $penggajian->no_ref;
+        $penggajian->delete();
+
+        return redirect()->route('penggajian.index')
+            ->with('status', 'Data penggajian dengan No. Ref: \'' . $noRef . '\' berhasil dihapus.');
+    }
 
     public function dataPenggajian(Request $request)
     {

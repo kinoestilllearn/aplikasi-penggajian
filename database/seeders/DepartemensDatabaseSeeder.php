@@ -12,28 +12,19 @@ class DepartemensDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $departemen = [
-            'Sales & Marketing',
-            'Finance',
-            'Human Resource',
-            'IT',
-            'Production',
-            'Logistic',
-            'Purchasing',
-            'Quality Control',
-            'Research & Development',
-            'General Affairs',
-            'Legal',
-            'Security',
-            'Maintenance',
-            'Others',
+        $departemens = [
+            'Mobile Legends (MLBB)',
+            'PUBG Mobile',
+            'Valorant',
+            'Free Fire',
+            'Content Creator / Brand Ambassador',
         ];
 
-        foreach ($departemen as $item) {
-            Departemen::create([
-                'nama' => $item,
-            ]);
+        foreach ($departemens as $item) {
+            Departemen::updateOrCreate(
+                ['nama' => $item],
+                ['nama' => $item]
+            );
         }
-
     }
 }

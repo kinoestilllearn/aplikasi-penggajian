@@ -44,12 +44,12 @@ class Penggajian extends Model
 
     public function inputGajiPokok()
     {
-        return Pegawai::find($this->pegawai_id)->gaji_pokok;
+        return Pegawai::find($this->pegawai_id)?->gaji_pokok ?? 0;
     }
 
     public function inputTunjanganTetap()
     {
-        return Pegawai::find($this->pegawai_id)->tunjangan_tetap;
+        return Pegawai::find($this->pegawai_id)?->tunjangan_tetap ?? 0;
     }
 
     /**
@@ -61,13 +61,14 @@ class Penggajian extends Model
     {
         $pegawai = Pegawai::find($pegawaiId);
 
-        if ($pegawai->status_pegawai == 'tetap') {
-            if ($pegawai->masa_kerja_tahun < 1) {
+        if ($pegawai && $pegawai->status_pegawai == 'tetap') {
+            $masaKerja = $pegawai->masa_kerja_tahun ?? 0;
+            if ($masaKerja < 1) {
                 return "1000000.00";
             } else {
                 $insentif = 1000000.00;
 
-                for ($i = 1; $i <= $pegawai->masa_kerja_tahun; $i++) {
+                for ($i = 1; $i <= $masaKerja; $i++) {
                     $insentif += 100000.00;
                 }
                 return number_format($insentif, 2, '.', '');
@@ -97,11 +98,13 @@ class Penggajian extends Model
     public function hitungNwnp(string $pegawaiId, string $periode)
     {
         $kehadiran = $this->hitungKehadiran($pegawaiId, $periode);
+        $jumlahIzin = $kehadiran['jumlah_izin'] ?? 0;
+        $jumlahAlpha = $kehadiran['jumlah_alpha'] ?? 0;
 
-        if ($kehadiran['jumlah_izin'] !== 0 || $kehadiran['jumlah_alpha'] !== 0) {
+        if ($jumlahIzin !== 0 || $jumlahAlpha !== 0) {
             $pegawai          = Pegawai::find($pegawaiId);
-            $jumlahTidakHadir = $kehadiran['jumlah_izin'] + $kehadiran['jumlah_alpha'];
-            $gajiPokok        = $pegawai->gaji_pokok;
+            $jumlahTidakHadir = $jumlahIzin + $jumlahAlpha;
+            $gajiPokok        = $pegawai?->gaji_pokok ?? 0;
             $jumlahNwnp       = ($jumlahTidakHadir * $gajiPokok / 30);
             return number_format($jumlahNwnp, 2, '.', '');
         } else {
@@ -118,7 +121,9 @@ class Penggajian extends Model
     public function hitungBpjs(string $pegawaiId)
     {
         $pegawai = Pegawai::find($pegawaiId);
-        $bpjs    = ($pegawai->gaji_pokok + $pegawai->tunjangan_tetap) * 0.03;
+        $gajiPokok = $pegawai?->gaji_pokok ?? 0;
+        $tunjanganTetap = $pegawai?->tunjangan_tetap ?? 0;
+        $bpjs    = ($gajiPokok + $tunjanganTetap) * 0.03;
 
         return number_format($bpjs, 2, '.', '');
     }
@@ -141,13 +146,15 @@ class Penggajian extends Model
                 "where pegawai_id = " . $pegawaiId . " AND waktu_keluar LIKE '" . $periode . "-%' AND DATE_FORMAT(waktu_keluar, '%H:%i:%s') >= '18:00:00'";
             $lembur = DB::select("$sql");
 
+            $detikLembur = (float) ($lembur[0]->jumlah_lembur ?? 0);
+
             // jika pegawai berstatus tetap atau kontrak
             if ($pegawai->status_pegawai == 'tetap' || $pegawai->status_pegawai == 'kontrak') {
-                return $this->detailLembur($lembur[0]->jumlah_lembur, $pegawai);
+                return $this->detailLembur($detikLembur, $pegawai);
 
                 // jika pegawai berstatus Harian Lepas
             } else {
-                return $this->detailLembur($lembur[0]->jumlah_lembur, $pegawai);
+                return $this->detailLembur($detikLembur, $pegawai);
             }
         }
     }
@@ -161,10 +168,12 @@ class Penggajian extends Model
     private function detailLembur(float $lembur, Pegawai $pegawai)
     {
         $jamLembur = $lembur / 3600;
+        $gajiPokok = $pegawai->gaji_pokok ?? 0;
+        $tunjanganTetap = $pegawai->tunjangan_tetap ?? 0;
 
         // jika jam lembur kurang dari 4 jam
         if (floor($jamLembur) < 4) {
-            $jumlahLembur = floor($jamLembur) * (($pegawai->gaji_pokok + $pegawai->tunjangan_tetap) / 173);
+            $jumlahLembur = floor($jamLembur) * (($gajiPokok + $tunjanganTetap) / 173);
 
             $data = [
                 'jam_lembur'    => $jamLembur,
@@ -176,7 +185,7 @@ class Penggajian extends Model
             // jika jam lembur lebih dari 4 jam
         } else {
             $jamLemburPenjabaran = $jamLembur - 4;
-            $jumlahLembur        = 2 * floor($jamLemburPenjabaran) * (($pegawai->gaji_pokok + $pegawai->tunjangan_tetap) / 173);
+            $jumlahLembur        = 2 * floor($jamLemburPenjabaran) * (($gajiPokok + $tunjanganTetap) / 173);
 
             $data = [
                 'jam_lembur'    => $jamLembur,
@@ -270,15 +279,18 @@ class Penggajian extends Model
      */
     public function compactDataPenggajian(Request $request)
     {
-        $gajiPokok      = Pegawai::find($request->id)->gaji_pokok;
-        $tunjanganTetap = Pegawai::find($request->id)->tunjangan_tetap;
+        $pegawai        = Pegawai::find($request->id);
+        $gajiPokok      = $pegawai?->gaji_pokok ?? 0;
+        $tunjanganTetap = $pegawai?->tunjangan_tetap ?? 0;
         $insentif       = (new Penggajian)->hitungInsentif($request->id);
         $lembur         = (new Penggajian)->hitungLembur($request->id, $request->periode);
         $kehadiran      = (new Penggajian)->hitungKehadiran($request->id, $request->periode);
         $nwnp           = (new Penggajian)->hitungNwnp($request->id, $request->periode);
         $bpjs           = (new Penggajian)->hitungBpjs($request->id);
-        $penambahGaji   = $gajiPokok + $tunjanganTetap + $insentif + $lembur['jumlah_lembur'];
-        $pengurangGaji  = $nwnp + $bpjs;
+
+        $jumlahLemburNominal = is_array($lembur) ? ($lembur['jumlah_lembur'] ?? 0) : 0;
+        $penambahGaji   = (float)$gajiPokok + (float)$tunjanganTetap + (float)$insentif + (float)$jumlahLemburNominal;
+        $pengurangGaji  = (float)$nwnp + (float)$bpjs;
         $totalGaji      = $penambahGaji - $pengurangGaji;
 
         return [

@@ -34,7 +34,14 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        //
+        $pageTitle = 'Tambah Pegawai Baru';
+
+        $data = [
+            'departemen' => Departemen::all(),
+            'posisi'     => Posisi::all(),
+        ];
+
+        return view('pegawai.create', compact('pageTitle', 'data'));
     }
 
     /**
@@ -42,7 +49,12 @@ class PegawaiController extends Controller
      */
     public function store(StorePegawaiRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $pegawai = Pegawai::create($validated);
+
+        return redirect()->route('pegawai.index')
+            ->with('status', 'Data pegawai \'' . $pegawai->nama . '\' berhasil ditambahkan.');
     }
 
     /**
@@ -90,9 +102,14 @@ class PegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pegawai $pegawai)
+    public function destroy(String $id)
     {
-        //
+        $pegawai = Pegawai::findOrFail($id);
+        $namaPegawai = $pegawai->nama;
+        $pegawai->delete();
+
+        return redirect()->route('pegawai.index')
+            ->with('status', 'Data pegawai \'' . $namaPegawai . '\' berhasil dihapus.');
     }
 
     public function dataPegawai(Request $request)

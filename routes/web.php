@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PenggajianController;
+use App\Http\Controllers\PosisiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('penggajian', PenggajianController::class);
     Route::resource('pegawai', PegawaiController::class);
+    Route::resource('departemen', DepartemenController::class);
+    Route::resource('posisi', PosisiController::class);
     Route::get('generate-pdf/penggajian/{id}', [PenggajianController::class, 'generatePDF'])->name('generate-pdf');
     Route::get('generate-pdf/penggajian/{id}/cetak', [PenggajianController::class, 'cetakPDF'])->name('cetak-pdf');
 });

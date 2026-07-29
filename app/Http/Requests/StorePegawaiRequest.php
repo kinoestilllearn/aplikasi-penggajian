@@ -26,12 +26,13 @@ class StorePegawaiRequest extends FormRequest
             'nama'            => ['bail', 'required', 'string', 'max:255'],
             'tempat_lahir'    => ['bail', 'required', 'string', 'max:255'],
             'tanggal_lahir'   => ['bail', 'required', 'date'],
-            'status_pegawai'  => ['bail', 'required', 'string', 'in:tetap,kontrak,HL', 'max:255'],
-            'jenis_kelamin'   => ['bail', 'required', 'string', 'in:L,P', 'max:1'],
-            'gaji_pokok'      => ['bail', 'required', 'numeric'],
-            'tunjangan_tetap' => ['bail', 'required', 'numeric'],
-            'departemen_id'   => ['bail', 'required', 'integer', 'exists:departemen,id'],
-            'posisi_id'       => ['bail', 'required', 'integer', 'exists:posisi,id'],
+            'status_pegawai'   => ['bail', 'required', 'string', 'in:tetap,kontrak,HL', 'max:255'],
+            'masa_kerja_tahun' => ['bail', 'required', 'integer', 'min:0'],
+            'jenis_kelamin'    => ['bail', 'required', 'string', 'in:L,P', 'max:1'],
+            'gaji_pokok'       => ['bail', 'required', 'numeric'],
+            'tunjangan_tetap'  => ['bail', 'required', 'numeric'],
+            'departemen_id'    => ['bail', 'required', 'integer', 'exists:departemen,id'],
+            'posisi_id'        => ['bail', 'required', 'integer', 'exists:posisi,id'],
         ];
     }
 }

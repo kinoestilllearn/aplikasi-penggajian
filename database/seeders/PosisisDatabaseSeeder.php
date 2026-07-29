@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Departemen;
 use App\Models\Posisi;
 use Illuminate\Database\Seeder;
 
@@ -12,20 +13,29 @@ class PosisisDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $namaPosisi = [
-            'Jajaran Direksi',
-            'Direktur Utama',
-            'Direktur',
-            'Manager',
-            'Supervisor',
-            'Staff',
+        $roles = [
+            'Pro Player (Main Roster)',
+            'Coach',
+            'Analyst',
+            'Team Manager',
+            'Content Creator',
         ];
 
-        for ($i = 0; $i < 20; $i++) {
-            Posisi::create([
-                'departemen_id' => rand(1, 14),
-                'nama'          => $namaPosisi[rand(0, 5)],
-            ]);
+        $departemens = Departemen::all();
+
+        foreach ($departemens as $dept) {
+            foreach ($roles as $role) {
+                Posisi::updateOrCreate(
+                    [
+                        'departemen_id' => $dept->id,
+                        'nama'          => $role,
+                    ],
+                    [
+                        'departemen_id' => $dept->id,
+                        'nama'          => $role,
+                    ]
+                );
+            }
         }
     }
 }
