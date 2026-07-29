@@ -15,6 +15,23 @@ class StorePegawaiRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('gaji_pokok')) {
+            $this->merge([
+                'gaji_pokok' => (float) str_replace(['.', ' '], '', (string)$this->gaji_pokok),
+            ]);
+        }
+        if ($this->has('tunjangan_tetap')) {
+            $this->merge([
+                'tunjangan_tetap' => (float) str_replace(['.', ' '], '', (string)$this->tunjangan_tetap),
+            ]);
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>

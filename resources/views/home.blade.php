@@ -1,27 +1,28 @@
 @extends('layouts.app')
 
-@section('title', 'EVOS Roster & Payroll Dashboard')
+@section('title', 'EVOS Esport Payroll Dashboard')
 
 @section('content')
 <div class="space-y-8">
     <!-- Apple Clean Header Banner -->
-    <div class="relative overflow-hidden bg-white rounded-2xl p-6 md:p-8 text-[#1D1D1F] border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+    <div class="relative overflow-hidden bg-white dark:bg-[#151D2A] rounded-2xl p-6 md:p-8 text-[#1D1D1F] dark:text-[#F5F5F7] border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-colors duration-300">
         <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute right-1/3 -top-10 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
                 <div class="flex items-center gap-2 mb-2">
-                    <span class="px-3 py-0.5 rounded-full bg-blue-50 text-[#0052CC] text-xs font-bold border border-blue-100 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#0052CC] animate-pulse"></span>
+                    <span class="px-3 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-[#0052CC] dark:text-[#00D2FF] text-xs font-bold border border-blue-100 dark:border-blue-800/40 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#0052CC] dark:bg-[#00D2FF] animate-pulse"></span>
                         EVOS Payroll Active
                     </span>
-                    <span class="text-xs text-[#86868B] font-medium">&bull; {{ date('l, d F Y') }}</span>
+                    <span class="text-xs text-[#86868B] dark:text-[#94A3B8] font-medium">&bull; {{ date('l, d F Y') }}</span>
                 </div>
-                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-[#1D1D1F] flex items-center gap-2">
-                    Selamat Datang, {{ Auth::user()->name }}! ⚡
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-3">
+                    <img src="{{ asset('images/evos-logo.png') }}" class="w-10 h-10 object-contain drop-shadow-md" alt="EVOS Logo">
+                    <span>Selamat Datang, {{ Auth::user()->name }}! ⚡</span>
                 </h1>
-                <p class="text-[#86868B] text-sm mt-1 max-w-2xl">
+                <p class="text-[#86868B] dark:text-[#94A3B8] text-sm mt-1 max-w-2xl">
                     EVOS Esports Roster Operations &mdash; pantau metrik gaji player & staff, distribusi anggaran per Divisi Game, dan transaksi payroll terbaru.
                 </p>
             </div>
@@ -34,12 +35,12 @@
                     <span>Run Payroll Roster</span>
                 </a>
                 @endcan
-                <a href="{{ route('penggajian.index') }}" class="inline-flex items-center gap-2 px-4 py-3 bg-[#F2F2F7] hover:bg-slate-200 text-[#1D1D1F] font-semibold rounded-xl transition-all text-xs group">
+                <a href="{{ route('penggajian.index') }}" class="inline-flex items-center gap-2 px-4 py-3 bg-[#F2F2F7] dark:bg-[#1C2536] hover:bg-slate-200 dark:hover:bg-slate-700 text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold rounded-xl transition-all text-xs group border border-slate-200/60 dark:border-slate-700">
                     <i data-lucide="file-down" class="w-4 h-4"></i>
                     <span>Export Slip Gaji</span>
                 </a>
                 @can('pegawai-index')
-                <a href="{{ route('pegawai.index') }}" class="inline-flex items-center gap-2 px-4 py-3 bg-[#F2F2F7] hover:bg-slate-200 text-[#1D1D1F] font-semibold rounded-xl transition-all text-xs">
+                <a href="{{ route('pegawai.index') }}" class="inline-flex items-center gap-2 px-4 py-3 bg-[#F2F2F7] dark:bg-[#1C2536] hover:bg-slate-200 dark:hover:bg-slate-700 text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold rounded-xl transition-all text-xs border border-slate-200/60 dark:border-slate-700">
                     <i data-lucide="user-plus" class="w-4 h-4"></i>
                     <span>Kelola Roster</span>
                 </a>
@@ -51,41 +52,41 @@
     <!-- Apple KPI Floating White Cards Row -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <!-- KPI 1: Total Monthly Payroll -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
+        <div class="bg-white dark:bg-[#151D2A] p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B]">Total Gaji Roster</span>
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0052CC] flex items-center justify-center group-hover:scale-105 transition-transform">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B] dark:text-[#94A3B8]">Total Gaji Roster</span>
+                <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-[#0052CC] dark:text-[#00D2FF] flex items-center justify-center group-hover:scale-105 transition-transform">
                     <i data-lucide="wallet" class="w-5 h-5"></i>
                 </div>
             </div>
-            <div class="text-xl font-extrabold text-[#1D1D1F] mb-1 leading-tight">
+            <div class="text-xl font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] mb-1 leading-tight">
                 Rp {{ number_format($totalNominalGaji, 0, ',', '.') }}
             </div>
             <div class="flex items-center gap-1.5 text-xs">
-                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-blue-50 text-[#0052CC] font-bold text-[11px]">
+                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-900/30 text-[#0052CC] dark:text-[#00D2FF] font-bold text-[11px]">
                     <i data-lucide="trending-up" class="w-3 h-3"></i>
                     {{ $totalPenggajian }}
                 </span>
-                <span class="text-[#86868B] font-medium">slip terproses</span>
+                <span class="text-[#86868B] dark:text-[#94A3B8] font-medium">slip terproses</span>
             </div>
         </div>
 
         <!-- KPI 2: Pending Approval -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
+        <div class="bg-white dark:bg-[#151D2A] p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B]">Pending Approval</span>
-                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B] dark:text-[#94A3B8]">Pending Approval</span>
+                <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <i data-lucide="clock" class="w-5 h-5"></i>
                 </div>
             </div>
-            <div class="text-3xl font-extrabold text-amber-600 mb-1">{{ number_format($pendingApproval) }}</div>
+            <div class="text-3xl font-extrabold text-amber-600 dark:text-amber-400 mb-1">{{ number_format($pendingApproval) }}</div>
             <div class="flex items-center gap-1.5 text-xs">
                 @if($pendingApproval > 0)
-                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-700 font-bold text-[11px] animate-pulse">
+                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-bold text-[11px] animate-pulse">
                     <i data-lucide="alert-circle" class="w-3 h-3"></i> Perlu Review SPV
                 </span>
                 @else
-                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-bold text-[11px]">
+                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-bold text-[11px]">
                     <i data-lucide="check-circle-2" class="w-3 h-3"></i> Semua Disetujui
                 </span>
                 @endif
@@ -93,36 +94,36 @@
         </div>
 
         <!-- KPI 3: Total Active Roster -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
+        <div class="bg-white dark:bg-[#151D2A] p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B]">Active Roster</span>
-                <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B] dark:text-[#94A3B8]">Active Roster</span>
+                <div class="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <i data-lucide="gamepad-2" class="w-5 h-5"></i>
                 </div>
             </div>
-            <div class="text-3xl font-extrabold text-[#1D1D1F] mb-1">{{ number_format($totalPegawai) }}</div>
+            <div class="text-3xl font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] mb-1">{{ number_format($totalPegawai) }}</div>
             <div class="flex items-center gap-1.5 text-xs">
-                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-cyan-50 text-cyan-700 font-bold text-[11px]">
+                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 font-bold text-[11px]">
                     <i data-lucide="shield" class="w-3 h-3"></i>
                     {{ count($deptLabels) }} Divisi
                 </span>
-                <span class="text-[#86868B] font-medium">player & staff</span>
+                <span class="text-[#86868B] dark:text-[#94A3B8] font-medium">player & staff</span>
             </div>
         </div>
 
         <!-- KPI 4: Average Salary -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
+        <div class="bg-white dark:bg-[#151D2A] p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B]">Rata-Rata Gaji Pokok</span>
-                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#86868B] dark:text-[#94A3B8]">Rata-Rata Gaji Pokok</span>
+                <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
                 </div>
             </div>
-            <div class="text-xl font-extrabold text-[#1D1D1F] mb-1 leading-tight">
+            <div class="text-xl font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] mb-1 leading-tight">
                 Rp {{ number_format($avgGajiPokok, 0, ',', '.') }}
             </div>
             <div class="flex items-center gap-1.5 text-xs">
-                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold text-[11px]">
+                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-bold text-[11px]">
                     <i data-lucide="calculator" class="w-3 h-3"></i> Per Member Roster
                 </span>
             </div>
@@ -131,30 +132,30 @@
 
     <!-- Status Distribution Cards -->
     <div class="grid grid-cols-3 gap-4">
-        <div class="bg-emerald-50/80 border border-emerald-200/50 rounded-2xl p-4 flex items-center justify-between">
+        <div class="bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200/50 dark:border-emerald-800/40 rounded-2xl p-4 flex items-center justify-between">
             <div>
-                <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-700 block">Disetujui (Paid)</span>
-                <span class="text-2xl font-extrabold text-emerald-800">{{ $disetujuiCount }}</span>
+                <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-400 block">Disetujui (Paid)</span>
+                <span class="text-2xl font-extrabold text-emerald-800 dark:text-emerald-300">{{ $disetujuiCount }}</span>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-emerald-100/80 text-emerald-700 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100/80 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
                 <i data-lucide="check-circle" class="w-5 h-5"></i>
             </div>
         </div>
-        <div class="bg-amber-50/80 border border-amber-200/50 rounded-2xl p-4 flex items-center justify-between">
+        <div class="bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/50 dark:border-amber-800/40 rounded-2xl p-4 flex items-center justify-between">
             <div>
-                <span class="text-[10px] uppercase font-bold tracking-wider text-amber-700 block">Draf / Pending</span>
-                <span class="text-2xl font-extrabold text-amber-800">{{ $pendingApproval }}</span>
+                <span class="text-[10px] uppercase font-bold tracking-wider text-amber-700 dark:text-amber-400 block">Draf / Pending</span>
+                <span class="text-2xl font-extrabold text-amber-800 dark:text-amber-300">{{ $pendingApproval }}</span>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-amber-100/80 text-amber-700 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-amber-100/80 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 flex items-center justify-center">
                 <i data-lucide="file-edit" class="w-5 h-5"></i>
             </div>
         </div>
-        <div class="bg-rose-50/80 border border-rose-200/50 rounded-2xl p-4 flex items-center justify-between">
+        <div class="bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/50 dark:border-rose-800/40 rounded-2xl p-4 flex items-center justify-between">
             <div>
-                <span class="text-[10px] uppercase font-bold tracking-wider text-rose-700 block">Dibatalkan</span>
-                <span class="text-2xl font-extrabold text-rose-800">{{ $dibatalkanCount }}</span>
+                <span class="text-[10px] uppercase font-bold tracking-wider text-rose-700 dark:text-rose-400 block">Dibatalkan</span>
+                <span class="text-2xl font-extrabold text-rose-800 dark:text-rose-300">{{ $dibatalkanCount }}</span>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-rose-100/80 text-rose-700 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-rose-100/80 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 flex items-center justify-center">
                 <i data-lucide="x-circle" class="w-5 h-5"></i>
             </div>
         </div>
@@ -163,28 +164,28 @@
     <!-- Charts Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Chart 1: Payroll Distribution by Divisi Game -->
-        <div class="bg-white rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6">
+        <div class="bg-white dark:bg-[#151D2A] rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6">
             <div class="flex items-center justify-between mb-5">
                 <div>
-                    <h3 class="text-sm font-bold text-[#1D1D1F] tracking-tight flex items-center gap-2">
-                        <i data-lucide="pie-chart" class="w-4 h-4 text-[#0052CC]"></i>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight flex items-center gap-2">
+                        <i data-lucide="pie-chart" class="w-4 h-4 text-[#0052CC] dark:text-[#00D2FF]"></i>
                         Distribusi Gaji per Divisi Game
                     </h3>
-                    <p class="text-xs text-[#86868B] mt-0.5">Berdasarkan akumulasi gaji pokok per divisi game</p>
+                    <p class="text-xs text-[#86868B] dark:text-[#94A3B8] mt-0.5">Berdasarkan akumulasi gaji pokok per divisi game</p>
                 </div>
             </div>
             <div id="chartDeptDonut" class="w-full" style="min-height: 300px;"></div>
         </div>
 
         <!-- Chart 2: Monthly Payroll Cost History (Bar) -->
-        <div class="bg-white rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6">
+        <div class="bg-white dark:bg-[#151D2A] rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6">
             <div class="flex items-center justify-between mb-5">
                 <div>
-                    <h3 class="text-sm font-bold text-[#1D1D1F] tracking-tight flex items-center gap-2">
-                        <i data-lucide="bar-chart-2" class="w-4 h-4 text-[#0052CC]"></i>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight flex items-center gap-2">
+                        <i data-lucide="bar-chart-2" class="w-4 h-4 text-[#0052CC] dark:text-[#00D2FF]"></i>
                         Riwayat Biaya Penggajian Bulanan
                     </h3>
-                    <p class="text-xs text-[#86868B] mt-0.5">Pengeluaran total per periode penggajian EVOS</p>
+                    <p class="text-xs text-[#86868B] dark:text-[#94A3B8] mt-0.5">Pengeluaran total per periode penggajian EVOS</p>
                 </div>
             </div>
             <div id="chartMonthlyBar" class="w-full" style="min-height: 300px;"></div>
@@ -194,41 +195,41 @@
     <!-- Average Salary by Divisi + Recent Transactions -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Avg Salary by Divisi Game -->
-        <div class="bg-white rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 space-y-4">
-            <h3 class="text-sm font-bold text-[#1D1D1F] tracking-tight flex items-center gap-2">
-                <i data-lucide="shield" class="w-4 h-4 text-[#0052CC]"></i>
+        <div class="bg-white dark:bg-[#151D2A] rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 space-y-4">
+            <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight flex items-center gap-2">
+                <i data-lucide="shield" class="w-4 h-4 text-[#0052CC] dark:text-[#00D2FF]"></i>
                 Rata-Rata Gaji per Divisi Game
             </h3>
 
             <div class="space-y-3">
                 @foreach($avgByDept as $idx => $dept)
-                <div class="flex items-center justify-between py-2 {{ !$loop->last ? 'border-b border-slate-100' : '' }}">
+                <div class="flex items-center justify-between py-2 {{ !$loop->last ? 'border-b border-slate-100 dark:border-slate-800' : '' }}">
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-sm
                             {{ $idx === 0 ? 'bg-[#0052CC]' : ($idx === 1 ? 'bg-cyan-600' : ($idx === 2 ? 'bg-sky-500' : 'bg-slate-600')) }}">
                             {{ strtoupper(substr($dept->dept_name, 0, 2)) }}
                         </div>
-                        <span class="text-xs font-semibold text-[#1D1D1F]">{{ $dept->dept_name }}</span>
+                        <span class="text-xs font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ $dept->dept_name }}</span>
                     </div>
-                    <span class="text-xs font-extrabold text-[#1D1D1F]">Rp {{ number_format($dept->avg_gaji, 0, ',', '.') }}</span>
+                    <span class="text-xs font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7]">Rp {{ number_format($dept->avg_gaji, 0, ',', '.') }}</span>
                 </div>
                 @endforeach
             </div>
 
             <!-- Role Access Card -->
-            <div class="mt-4 bg-[#F2F2F7] rounded-xl p-4 text-[#1D1D1F] space-y-2 border border-slate-200/60">
+            <div class="mt-4 bg-[#F2F2F7] dark:bg-[#1C2536] rounded-xl p-4 text-[#1D1D1F] dark:text-[#F5F5F7] space-y-2 border border-slate-200/60 dark:border-slate-700/60">
                 <div class="flex items-center gap-2 text-xs font-bold">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-[#0052CC]"></i>
+                    <i data-lucide="shield-check" class="w-4 h-4 text-[#0052CC] dark:text-[#00D2FF]"></i>
                     <span>Akses Role EVOS: </span>
                     @role('supervisor-payroll')
-                    <span class="px-2 py-0.5 rounded bg-blue-100 text-[#0052CC] text-[10px] font-bold">Supervisor Payroll</span>
+                    <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-[#0052CC] dark:text-[#00D2FF] text-[10px] font-bold">Supervisor Payroll</span>
                     @elserole('staff-payroll')
-                    <span class="px-2 py-0.5 rounded bg-blue-100 text-[#0052CC] text-[10px] font-bold">Staff Payroll</span>
+                    <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-[#0052CC] dark:text-[#00D2FF] text-[10px] font-bold">Staff Payroll</span>
                     @else
-                    <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px] font-bold">User Standard</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold">User Standard</span>
                     @endrole
                 </div>
-                <p class="text-[11px] text-[#86868B] leading-relaxed">
+                <p class="text-[11px] text-[#86868B] dark:text-[#94A3B8] leading-relaxed">
                     @role('supervisor-payroll')
                     Anda berhak menyetujui atau membatalkan seluruh draf slip penggajian roster.
                     @elserole('staff-payroll')
@@ -241,16 +242,16 @@
         </div>
 
         <!-- Recent Transactions / Activity Log (2 Cols) -->
-        <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 flex flex-col">
+        <div class="lg:col-span-2 bg-white dark:bg-[#151D2A] rounded-2xl border border-slate-200/60 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 flex flex-col">
             <div class="flex items-center justify-between mb-5">
                 <div>
-                    <h3 class="text-sm font-bold text-[#1D1D1F] tracking-tight flex items-center gap-2">
-                        <i data-lucide="activity" class="w-4 h-4 text-[#0052CC]"></i>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-[#0052CC] dark:text-[#00D2FF]"></i>
                         Aktivitas Penggajian Roster Terbaru
                     </h3>
-                    <p class="text-xs text-[#86868B] mt-0.5">8 slip penggajian player & staff terakhir yang diproses</p>
+                    <p class="text-xs text-[#86868B] dark:text-[#94A3B8] mt-0.5">8 slip penggajian player & staff terakhir yang diproses</p>
                 </div>
-                <a href="{{ route('penggajian.index') }}" class="text-xs font-bold text-[#0052CC] hover:text-blue-700 flex items-center gap-1 hover:underline">
+                <a href="{{ route('penggajian.index') }}" class="text-xs font-bold text-[#0052CC] dark:text-[#00D2FF] hover:underline flex items-center gap-1">
                     Lihat Semua <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -258,7 +259,7 @@
             <div class="overflow-x-auto flex-1">
                 <table class="w-full text-left text-xs border-collapse">
                     <thead>
-                        <tr class="border-b border-slate-200 text-[#86868B] uppercase font-semibold text-[10px]">
+                        <tr class="border-b border-slate-200 dark:border-slate-800 text-[#86868B] dark:text-[#94A3B8] uppercase font-semibold text-[10px]">
                             <th class="p-3">Ref & Member</th>
                             <th class="p-3">Divisi Game</th>
                             <th class="p-3">Periode</th>
@@ -267,53 +268,53 @@
                             <th class="p-3 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100 text-[#1D1D1F]">
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-[#1D1D1F] dark:text-[#F5F5F7]">
                         @forelse($recentPenggajian as $p)
-                        <tr class="hover:bg-[#FAFAFC] transition-colors">
+                        <tr class="hover:bg-[#FAFAFC] dark:hover:bg-[#1E293B] transition-colors">
                             <td class="p-3">
                                 <div class="flex items-center gap-2.5">
-                                    <img src="https://ui-avatars.com/api/?background=0052CC&color=ffffff&bold=true&name={{ urlencode($p->pegawai->nama ?? 'EVOS') }}" class="w-8 h-8 rounded-lg shadow-sm border border-slate-200 shrink-0" alt="Avatar">
+                                    <img src="https://ui-avatars.com/api/?background=0052CC&color=ffffff&bold=true&name={{ urlencode($p->pegawai->nama ?? 'EVOS') }}" class="w-8 h-8 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 shrink-0" alt="Avatar">
                                     <div>
-                                        <div class="font-bold text-[#1D1D1F] text-xs">{{ $p->pegawai->nama ?? 'N/A' }}</div>
-                                        <div class="text-[10px] text-[#86868B] font-mono">#{{ $p->no_ref }}</div>
+                                        <div class="font-bold text-[#1D1D1F] dark:text-[#F5F5F7] text-xs">{{ $p->pegawai->nama ?? 'N/A' }}</div>
+                                        <div class="text-[10px] text-[#86868B] dark:text-[#94A3B8] font-mono">#{{ $p->no_ref }}</div>
                                     </div>
                                 </div>
                             </td>
                             <td class="p-3">
-                                <span class="px-2 py-0.5 rounded-lg bg-blue-50 text-[#0052CC] text-xs font-semibold">
+                                <span class="px-2 py-0.5 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-[#0052CC] dark:text-[#00D2FF] text-xs font-semibold">
                                     {{ $p->pegawai->departemen?->nama ?? '-' }}
                                 </span>
                             </td>
-                            <td class="p-3 font-medium text-[#1D1D1F]">{{ $p->periode }}</td>
-                            <td class="p-3 text-right font-extrabold text-[#1D1D1F]">
+                            <td class="p-3 font-medium text-[#1D1D1F] dark:text-[#F5F5F7]">{{ $p->periode }}</td>
+                            <td class="p-3 text-right font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7]">
                                 Rp {{ number_format($p->total_gaji, 0, ',', '.') }}
                             </td>
                             <td class="p-3 text-center">
                                 @if($p->status == 'disetujui')
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Paid
                                 </span>
                                 @elseif($p->status == 'dibatalkan')
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700 border border-rose-200">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40">
                                     <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Cancelled
                                 </span>
                                 @else
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 border border-amber-200">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/40">
                                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Pending
                                 </span>
                                 @endif
                             </td>
                             <td class="p-3 text-center">
-                                <a href="{{ route('penggajian.show', $p->id) }}" class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#F2F2F7] hover:bg-[#0052CC] hover:text-white text-[#1D1D1F] transition-all" title="View Detail">
+                                <a href="{{ route('penggajian.show', $p->id) }}" class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#F2F2F7] dark:bg-[#1C2536] hover:bg-[#0052CC] hover:text-white dark:hover:bg-[#0052CC] text-[#1D1D1F] dark:text-[#F5F5F7] transition-all" title="View Detail">
                                     <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                                 </a>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="p-10 text-center text-[#86868B]">
+                            <td colspan="6" class="p-10 text-center text-[#86868B] dark:text-[#94A3B8]">
                                 <div class="flex flex-col items-center gap-2">
-                                    <i data-lucide="inbox" class="w-8 h-8 text-slate-300"></i>
+                                    <i data-lucide="inbox" class="w-8 h-8 text-slate-300 dark:text-slate-600"></i>
                                     <span class="text-sm font-medium">Belum ada transaksi penggajian roster</span>
                                 </div>
                             </td>
@@ -332,6 +333,10 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    const isDark = document.documentElement.classList.contains('dark');
+    const textColor = isDark ? '#F5F5F7' : '#1D1D1F';
+    const mutedColor = isDark ? '#94A3B8' : '#86868B';
+
     // Donut Chart: Divisi Game Distribution
     const deptLabels = @json($deptLabels);
     const deptValues = @json($deptValues);
@@ -353,11 +358,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     size: '60%',
                     labels: {
                         show: true,
-                        name: { show: true, fontSize: '13px', fontWeight: 700 },
+                        name: { show: true, fontSize: '13px', fontWeight: 700, color: textColor },
                         value: {
                             show: true,
                             fontSize: '14px',
                             fontWeight: 800,
+                            color: textColor,
                             formatter: function (val) {
                                 return 'Rp ' + Number(val).toLocaleString('id-ID');
                             }
@@ -367,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             label: 'Total Gaji Pokok',
                             fontSize: '11px',
                             fontWeight: 600,
-                            color: '#86868B',
+                            color: mutedColor,
                             formatter: function (w) {
                                 const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
                                 return 'Rp ' + total.toLocaleString('id-ID');
@@ -382,12 +388,13 @@ document.addEventListener('DOMContentLoaded', function () {
             position: 'bottom',
             fontSize: '12px',
             fontWeight: 600,
-            labels: { colors: '#1D1D1F' },
+            labels: { colors: textColor },
             markers: { size: 8, shape: 'circle', offsetX: -3 },
             itemMargin: { horizontal: 12, vertical: 4 },
         },
-        stroke: { width: 2, colors: ['#fff'] },
+        stroke: { width: 2, colors: [isDark ? '#151D2A' : '#fff'] },
         tooltip: {
+            theme: isDark ? 'dark' : 'light',
             y: {
                 formatter: function (val) {
                     return 'Rp ' + Number(val).toLocaleString('id-ID');
@@ -440,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dataLabels: {
             enabled: true,
             offsetY: -20,
-            style: { fontSize: '10px', fontWeight: 800, colors: ['#1D1D1F'] },
+            style: { fontSize: '10px', fontWeight: 800, colors: [textColor] },
             formatter: function (val) {
                 if (val >= 1000000) return 'Rp ' + (val / 1000000).toFixed(1) + 'Jt';
                 if (val >= 1000) return 'Rp ' + (val / 1000).toFixed(0) + 'K';
@@ -450,14 +457,14 @@ document.addEventListener('DOMContentLoaded', function () {
         xaxis: {
             categories: monthLabels,
             labels: {
-                style: { fontSize: '11px', fontWeight: 600, colors: '#86868B' }
+                style: { fontSize: '11px', fontWeight: 600, colors: mutedColor }
             },
             axisBorder: { show: false },
             axisTicks: { show: false }
         },
         yaxis: {
             labels: {
-                style: { fontSize: '11px', colors: '#86868B' },
+                style: { fontSize: '11px', colors: mutedColor },
                 formatter: function (val) {
                     if (val >= 1000000) return (val / 1000000).toFixed(1) + 'Jt';
                     if (val >= 1000) return (val / 1000).toFixed(0) + 'K';
@@ -466,11 +473,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         grid: {
-            borderColor: '#F2F2F7',
+            borderColor: isDark ? '#334155' : '#F2F2F7',
             strokeDashArray: 4,
             padding: { top: -10 }
         },
         tooltip: {
+            theme: isDark ? 'dark' : 'light',
             y: {
                 formatter: function (val) {
                     return 'Rp ' + Number(val).toLocaleString('id-ID');

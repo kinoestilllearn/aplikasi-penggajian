@@ -109,7 +109,6 @@ class Penggajian extends Model
             return number_format($jumlahNwnp, 2, '.', '');
         } else {
             return number_format(0.00, 2, '.', '');
-
         }
     }
 
@@ -194,7 +193,6 @@ class Penggajian extends Model
 
             return $data;
         }
-
     }
 
     /**
@@ -204,27 +202,34 @@ class Penggajian extends Model
      */
     public function storeDataPenggajian(StorePenggajianRequest $request)
     {
+        $cleanNum = function($val) {
+            if (is_null($val) || $val === '') return 0.00;
+            $clean = str_replace(['.', ' '], '', (string)$val);
+            $clean = str_replace(',', '.', $clean);
+            return (float) preg_replace('/[^0-9.]/', '', $clean);
+        };
+
         return [
             'no_ref'                 => fake()->numerify('#########'),
             'tanggal_mulai'          => date("Y-m-d", strtotime($request->tahun_periode . '-' . $request->bulan_periode . '-01')),
             'tanggal_hingga'         => date("Y-m-t", strtotime($request->tahun_periode . '-' . $request->bulan_periode . '-20')),
             'periode'                => $request->tahun_periode . '-' . $request->bulan_periode,
             'pegawai_id'             => $request->pegawai_id,
-            'kehadiran'              => $request->kehadiran,
-            'absen'                  => (string) ($request->sakit + $request->izin),
-            'cuti'                   => $request->cuti,
-            'alpha'                  => $request->alpha,
-            'lama_lembur'            => number_format($request->lama_lembur, 4, '.', ''),
-            'gaji_pokok'             => $request->gaji_pokok,
-            'jumlah_tunjangan_tetap' => $request->jumlah_tunjangan_tetap,
-            'jumlah_insentif'        => $request->jumlah_insentif,
-            'jumlah_lembur'          => $request->jumlah_lembur,
-            'jumlah_potongan_nwnp'   => $request->jumlah_nwnp,
-            'jumlah_potongan_bpjs'   => $request->bpjs,
-            'jumlah_penambah_gaji'   => $request->jumlah_penambah_gaji,
-            'jumlah_potongan_gaji'   => $request->jumlah_potongan_gaji,
-            'total_gaji'             => $request->total_gaji,
-            'dibuat_oleh'            => 1,
+            'kehadiran'              => $request->kehadiran ?? 0,
+            'absen'                  => (string) (($request->sakit ?? 0) + ($request->izin ?? 0)),
+            'cuti'                   => $request->cuti ?? 0,
+            'alpha'                  => $request->alpha ?? 0,
+            'lama_lembur'            => number_format($cleanNum($request->lama_lembur), 4, '.', ''),
+            'gaji_pokok'             => $cleanNum($request->gaji_pokok),
+            'jumlah_tunjangan_tetap' => $cleanNum($request->jumlah_tunjangan_tetap),
+            'jumlah_insentif'        => $cleanNum($request->jumlah_insentif),
+            'jumlah_lembur'          => $cleanNum($request->jumlah_lembur),
+            'jumlah_potongan_nwnp'   => $cleanNum($request->jumlah_nwnp),
+            'jumlah_potongan_bpjs'   => $cleanNum($request->bpjs),
+            'jumlah_penambah_gaji'   => $cleanNum($request->jumlah_penambah_gaji),
+            'jumlah_potongan_gaji'   => $cleanNum($request->jumlah_potongan_gaji),
+            'total_gaji'             => $cleanNum($request->total_gaji),
+            'dibuat_oleh'            => auth()->id() ?? 1,
         ];
     }
 

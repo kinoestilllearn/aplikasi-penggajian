@@ -97,7 +97,14 @@
     <div class="banner-header">
         <table style="width:100%; border:none; margin:0;">
             <tr>
-                <td style="padding:0;">
+                <td style="padding:0; width:60px; vertical-align:middle;">
+                    @if(file_exists(public_path('images/evos-logo.png')))
+                    <img src="{{ public_path('images/evos-logo.png') }}" style="width:48px; height:48px; object-fit:contain;" alt="EVOS Logo">
+                    @elseif(file_exists(public_path('images/evos-logo.jpg')))
+                    <img src="{{ public_path('images/evos-logo.jpg') }}" style="width:48px; height:48px; object-fit:contain;" alt="EVOS Logo">
+                    @endif
+                </td>
+                <td style="padding:0; vertical-align:middle;">
                     <div class="banner-title">EVOS ESPORTS &bull; SLIP GAJI ROSTER</div>
                     <div class="banner-subtitle">Official Payroll Slip &mdash; PT Mau Maju EVOS Enterprise</div>
                 </td>
@@ -157,23 +164,23 @@
         <table>
             <tr>
                 <td>Gaji Pokok</td>
-                <td style="text-align:right;">Rp {{ number_format($penggajian->gaji_pokok, 2, ',', '.') }}</td>
+                <td style="text-align:right;">Rp {{ number_format((float)$penggajian->gaji_pokok, (float)$penggajian->gaji_pokok == floor((float)$penggajian->gaji_pokok) ? 0 : 2, ',', '.') }}</td>
             </tr>
             <tr>
                 <td>Tunjangan Tetap</td>
-                <td style="text-align:right;">Rp {{ number_format($penggajian->jumlah_tunjangan_tetap, 2, ',', '.') }}</td>
+                <td style="text-align:right;">Rp {{ number_format((float)$penggajian->jumlah_tunjangan_tetap, (float)$penggajian->jumlah_tunjangan_tetap == floor((float)$penggajian->jumlah_tunjangan_tetap) ? 0 : 2, ',', '.') }}</td>
             </tr>
             <tr>
                 <td>Insentif Masa Kerja</td>
-                <td style="text-align:right;">Rp {{ number_format($penggajian->jumlah_insentif, 2, ',', '.') }}</td>
+                <td style="text-align:right;">Rp {{ number_format((float)$penggajian->jumlah_insentif, (float)$penggajian->jumlah_insentif == floor((float)$penggajian->jumlah_insentif) ? 0 : 2, ',', '.') }}</td>
             </tr>
             <tr>
-                <td>Upah Lembur</td>
-                <td style="text-align:right;">Rp {{ number_format($penggajian->jumlah_lembur, 2, ',', '.') }}</td>
+                <td>Upah Lembur ({{ number_format((float)$penggajian->lama_lembur, (float)$penggajian->lama_lembur == floor((float)$penggajian->lama_lembur) ? 0 : 2, ',', '.') }} Jam)</td>
+                <td style="text-align:right;">Rp {{ number_format((float)$penggajian->jumlah_lembur, (float)$penggajian->jumlah_lembur == floor((float)$penggajian->jumlah_lembur) ? 0 : 2, ',', '.') }}</td>
             </tr>
             <tr style="border-top:1px solid #cbd5e1; font-weight:bold;">
                 <td>Total Penambah Gaji</td>
-                <td style="text-align:right;">Rp {{ number_format($penggajian->jumlah_penambah_gaji, 2, ',', '.') }}</td>
+                <td style="text-align:right;">Rp {{ number_format((float)$penggajian->jumlah_penambah_gaji, (float)$penggajian->jumlah_penambah_gaji == floor((float)$penggajian->jumlah_penambah_gaji) ? 0 : 2, ',', '.') }}</td>
             </tr>
         </table>
 
@@ -182,15 +189,15 @@
         <table>
             <tr>
                 <td>Potongan Absensi (NWNP)</td>
-                <td style="text-align:right; color:#dc2626;">- Rp {{ number_format($penggajian->jumlah_potongan_nwnp, 2, ',', '.') }}</td>
+                <td style="text-align:right; color:#dc2626;">- Rp {{ number_format((float)$penggajian->jumlah_potongan_nwnp, (float)$penggajian->jumlah_potongan_nwnp == floor((float)$penggajian->jumlah_potongan_nwnp) ? 0 : 2, ',', '.') }}</td>
             </tr>
             <tr>
                 <td>Potongan BPJS (3%)</td>
-                <td style="text-align:right; color:#dc2626;">- Rp {{ number_format($penggajian->jumlah_potongan_gaji, 2, ',', '.') }}</td>
+                <td style="text-align:right; color:#dc2626;">- Rp {{ number_format((float)$penggajian->jumlah_potongan_bpjs, (float)$penggajian->jumlah_potongan_bpjs == floor((float)$penggajian->jumlah_potongan_bpjs) ? 0 : 2, ',', '.') }}</td>
             </tr>
             <tr style="border-top:1px solid #cbd5e1; font-weight:bold;">
                 <td>Total Potongan Gaji</td>
-                <td style="text-align:right; color:#dc2626;">- Rp {{ number_format($penggajian->jumlah_potongan_gaji, 2, ',', '.') }}</td>
+                <td style="text-align:right; color:#dc2626;">- Rp {{ number_format((float)$penggajian->jumlah_potongan_gaji, (float)$penggajian->jumlah_potongan_gaji == floor((float)$penggajian->jumlah_potongan_gaji) ? 0 : 2, ',', '.') }}</td>
             </tr>
         </table>
 
@@ -202,7 +209,7 @@
                         <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#94a3b8;">TOTAL GAJI BERSIH (TAKE HOME PAY)</div>
                     </td>
                     <td style="padding:0; text-align:right; vertical-align:middle;">
-                        <div class="total-amount">Rp {{ number_format($penggajian->total_gaji, 2, ',', '.') }}</div>
+                        <div class="total-amount">Rp {{ number_format((float)$penggajian->total_gaji, (float)$penggajian->total_gaji == floor((float)$penggajian->total_gaji) ? 0 : 2, ',', '.') }}</div>
                     </td>
                 </tr>
             </table>
